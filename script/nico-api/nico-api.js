@@ -340,7 +340,7 @@ NicoAPI.prototype.getNormalVideo =
 
 	return new Promise(function (resolve, reject) {
 		options.hostname = URLS.video_page.hostname;
-		options.path = URLS.video_page.path+id;
+		options.path = URLS.video_page.path+id+"?watch_harmful=1";
 
 		that.getByHttp(options).then(function (result) {
 			// 動画ページからnicohistoryを取得
@@ -391,7 +391,7 @@ NicoAPI.prototype.getSmartVideo =
 
 	return new Promise(function (resolve, reject) {
 		options.hostname = URLS.sp_video_page.hostname;
-		options.path = URLS.sp_video_page.path+id;
+		options.path = URLS.sp_video_page.path+id+"?watch_harmful=1";
 
 		that.getByHttp(options).then(function (result) {
 			// watch_api_url

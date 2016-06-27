@@ -37,7 +37,6 @@ NVMain.createWindow = function () {
 		x: setting.x,
 		y: setting.y,
 		resizable: true,
-		icon: "NicoV.ico",
 		title: "NicoV"
 	});
 	NVMain.window.setMenu(null);
@@ -45,7 +44,6 @@ NVMain.createWindow = function () {
 		NVMain.window.maximize();
 	}
 	NVMain.window.loadURL(`file://${app.getAppPath()}/page/index.html`);
-
 	NVMain.window.on("close", NVMain.closeAction);
 	NVMain.window.on("closed", function () {
 		NVMain.window = null;
@@ -83,7 +81,6 @@ NVPlayer.createWindow = function () {
 		x: setting.x,
 		y: setting.y,
 		resizable: true,
-		icon: "NicoV.ico",
 		title: "NicoV"
 	});
 	NVPlayer.window.setMenu(null);
