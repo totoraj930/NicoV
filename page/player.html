@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>NicoV</title>
+	<link rel="stylesheet" href="player.css">
+	<link rel="stylesheet" href="player-color.css">
+	<script src="./script/lib/jquery.min.js"></script>
+	<script>window.jQuery = window.$ = require("./script/lib/jquery.min");</script>
+	<script src="./script/player.js"></script>
+</head>
+<body>
+	<div class="wrap">
+		<div class="side">
+			<button class="side-open-button" id="open_side"></button>
+			<section class="side-top">
+				<button id="shuffle" title="シャッフル">シャッフル</button>
+				<button data-mode="0" id="mode" title="再生モード"><span class="hint">通常再生</span></button>
+				<button class="close" id="close_side" title="閉じる">×</button>
+			</section>
+			<section class="side-main">
+				<ul class="playlist" id="playlist">
+<!--
+					<li><p data-num="0" class="active">シャフト☆ハリケーン【合作MAD】</p></li>
+-->
+				</ul>
+			</section>
+		</div>
+
+
+		<div class="main">
+			<video src="" class="video" id="video" controls autoplay></video>
+		</div>
+	</div>
+</body>
+</html>

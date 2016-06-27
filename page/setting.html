@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>NicoV</title>
+	<link rel="stylesheet" href="main.css">
+</head>
+<body>
+	<div class="wrap">
+		<div class="side">
+			<session class="side-content">
+				<h1>マイリスト</h1>
+				<div class="side-content-body">
+					<ul class="button-list">
+						<li><p>とりあえずマイリスト</p></li>
+						<li><p>ボカロ曲_1</p></li>
+						<li><p>神動画</p></li>
+						<li><p>適当</p></li>
+					</ul>
+				</div>
+			</session>
+			<session class="side-content">
+				<h1>設定</h1>
+				<div class="side-content-body">
+					<ul class="button-list">
+						<li><p>アカウント設定</p></li>
+						<li><p class="active">マイリスト設定</p></li>
+					</ul>
+				</div>
+			</session>
+		</div>
+
+
+		<div class="main">
+
+			<session class="main-content">
+				<h1 id="mylist_title">マイリスト設定</h1>
+				<div class="main-content-body">
+					<section>
+						<h1>表示するマイリスト</h1>
+						<ul class="edit-mylist-list">
+							<li data-mylist-id="deflist"><p><span class="move"></span>とりあえずマイリスト<span class="icon i-x"></span></p></li>
+							<li><p><span class="move"></span>ボカロ曲_1<span class="icon i-x"></span></p></li>
+							<li><p><span class="move"></span>神動画<span class="icon i-x"></span></p></li>
+							<li><p><span class="move"></span>適当<span class="icon i-x"></span></p></li>
+						</ul>
+						<button id="edit-mylist-add" class="button-1 b-c-normal">追加する</button>
+						<button id="edit-mylist-save" class="button-1 b-c-save">保存</button>
+						<p class="note">
+							とりあえずマイリストを表示する場合、IDは「deflist」にしてください。
+						</p>
+					</section>
+					<section>
+						<h1>アカウント状況</h1>
+						<p class="notice-1 n-c-ok">ログインに成功しました</p>
+						<p class="notice-1 n-c-error">ログインに失敗しました</p>
+					</section>
+					<section>
+						<h1>ユーザーセッション</h1>
+						<input type="password" placeholder="user_sessionを入力" class="input-1">
+						<button id="user-session-save" class="button-1 b-c-save">ログイン</button>
+						<p class="note">
+							.nicovideo.jpのCookie「user_session」を使ってログインします
+						</p>
+					</section>
+				</div>
+			</session>
+
+		</div>
+	</div>
+	<script src="./script/lib/jquery.min.js"></script>
+	<script src="./script/lib/jquery.sortable.min.js"></script>
+	<script>
+		$(".edit-mylist-list").sortable({
+			handle: ".move"
+		});
+		$(".edit-mylist-list .i-x").on("click", function () {
+			$(this).parent().parent().remove();
+		});
+	</script>
+</body>
+</html>

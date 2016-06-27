@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>NicoV</title>
+	<link rel="stylesheet" href="main.css">
+	<link rel="stylesheet" href="main-color.css">
+	<script src="./script/lib/jquery.min.js"></script>
+	<script>window.jQuery = window.$ = require("./script/lib/jquery.min");</script>
+	<script src="./script/lib/jquery.sortable.min.js"></script>
+	<script src="./script/main.js"></script>
+	<script src="./script/mylist.js"></script>
+</head>
+<body>
+	<div class="wrap">
+		<div class="side">
+			<section class="side-content">
+				<h1>マイリスト</h1>
+				<div class="side-content-body">
+					<ul class="button-list" id="mylist_group">
+<!--
+						<li><p data-list-id="deflist" data-link="mylist">とりあえずマイリスト</p></li>
+-->
+					</ul>
+				</div>
+			</section>
+			<section class="side-content">
+				<h1>設定</h1>
+				<div class="side-content-body">
+					<ul class="button-list">
+						<li><p data-link="setting-mylist">マイリスト設定</p></li>
+						<li><p data-link="setting-account">アカウント設定</p></li>
+					</ul>
+				</div>
+			</section>
+			<section class="side-content">
+				<h1>その他</h1>
+				<div class="side-content-body">
+					<ul class="button-list">
+						<li><p data-link="help">ヘルプ</p></li>
+						<li><p data-link="license">ライセンス</p></li>
+					</ul>
+				</div>
+			</section>
+		</div>
+
+
+		<div class="main">
+			<section class="main-content" data-section="home">
+				<h1>NicoV v0.0.1</h1>
+				<div class="main-content-body">
+
+				</div>
+			</section>
+
+			<section class="main-content" id="mylist" data-section="mylist"　data-id="deflist">
+				<h1 id="mylist_title"></h1>
+				<div class="main-content-body mylist-wrap" id="mylist_items">
+<!--
+					<section data-num="0" data-id="sm9" class="mylist-item">
+						<div class="thumb"  style="background-image: url('');">
+							<p class="time">5:24</p>
+						</div>
+						<h1>動画サンプル</h1>
+					</section>
+-->
+				</div>
+			</section>
+
+
+			<section class="main-content" data-section="setting-mylist">
+				<h1 id="mylist_title">マイリスト設定</h1>
+				<div class="main-content-body">
+					<section>
+						<h1>表示するマイリスト</h1>
+						<ul class="edit-mylist-list" id="edit_mylist_group">
+<!--
+							<li data-mylist-id="deflist"><p><span class="move"></span>とりあえずマイリスト<span class="icon i-x">×</span></p></li>
+-->
+						</ul>
+						<button id="edit_mylist_group_save" class="button-1 b-c-save">保存</button>
+					</section>
+					<section>
+						<h1>マイリストを追加</h1>
+						<div>
+							<input type="text" placeholder="マイリストID" id="edit_mylist_group_id" class="input-2">
+							<input type="text" placeholder="表示名" id="edit_mylist_group_name" class="input-2">
+						</div>
+						<button id="edit_mylist_group_add" class="button-1 b-c-save">追加</button>
+						<p class="note">
+							とりあえずマイリストを追加するには、マイリストIDを「deflist」にしてください。
+						</p>
+					</section>
+				</div>
+			</section>
+
+
+			<section class="main-content" data-section="setting-account">
+				<h1 id="mylist_title">アカウント設定</h1>
+				<div class="main-content-body">
+					<section>
+						<h1>アカウント状況</h1>
+						<p class="notice-1 n-c-ok" id="login-ok" style="display: none;">ログイン成功</p>
+						<p class="notice-1 n-c-error" id="login-error" style="display: none;">ログイン失敗</p>
+					</section>
+					<section>
+						<h1>ユーザーセッション</h1>
+						<input type="password" placeholder="user_sessionを入力" class="input-1" id="user_session">
+						<button id="login" class="button-1 b-c-save">ログイン</button>
+						<p class="note">
+							.nicovideo.jpのCookie「user_session」を使ってログインします
+						</p>
+					</section>
+				</div>
+			</section>
+
+
+			<section class="main-content" data-section="help">
+				<h1>ヘルプ</h1>
+				<div class="main-content-body">
+					<section>
+						<h1>NicoVについて</h1>
+						<p class="note">https://github.com/totoraj930/NicoV</p>
+					</section>
+				</div>
+			</section>
+
+
+			<section class="main-content" data-section="license">
+				<h1>ライセンス</h1>
+				<div class="main-content-body">
+
+					<section>
+						<h1>Electron</h1>
+						<p class="note">http://electron.atom.io/</p>
+				<pre class="license-code"><code>Copyright (c) 2014 GitHub Inc.
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</code></pre>
+					</section>
+
+					<section>
+						<h1>electron-packager</h1>
+						<p class="note">https://github.com/electron-userland/electron-packager</p>
+						<pre class="license-code"><code>Copyright (c) 2015 Max Ogden and other contributors
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</code></pre>
+					</section>
+
+					<section>
+						<h1>electron-json-storage</h1>
+						<p class="note">https://github.com/jviotti/electron-json-storage/</p>
+						<pre class="license-code"><code>The project is licensed under the MIT license.</code></pre>
+					</section>
+
+					<section>
+						<h1>cheerio</h1>
+						<p class="note">https://github.com/cheeriojs/cheerio/</p>
+						<pre class="license-code"><code>(The MIT License)
+
+Copyright (c) 2012 Matt Mueller &lt;mattmuelle@gmail.com>&gt;
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</code></pre>
+					</section>
+
+					<section>
+						<h1>jQuery</h1>
+				<p class="note">http://jquery.com/</p>
+				<pre class="license-code"><code>/*!
+ * jQuery JavaScript Library v2.2.3
+ * http://jquery.com/
+ *
+ * Includes Sizzle.js
+ * http://sizzlejs.com/
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license
+ * http://jquery.org/license
+ *
+ * Date: 2016-04-05T19:26Z
+ */</code></pre>
+					</section>
+
+				</div>
+			</section>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,356 @@
+*,
+*:before,
+*:after {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	box-sizing: border-box;
+	line-height: 1;
+}
+
+html, body {
+	height: 100%;
+}
+
+body {
+	background-color: #fff;
+	font-size: 16px;
+	font-family: "Helvetica Neue", "メイリオ", Meiryo, Helvetica, Arial, "游ゴシック", YuGothic, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+	line-height: 1;
+}
+button, input {
+	font-family: "Helvetica Neue", "メイリオ", Meiryo, Helvetica, Arial, "游ゴシック", YuGothic, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+	background-color: transparent;
+}
+
+.wrap {
+	display: flex;
+	height: 100%;
+}
+
+/* ==========
+	メイン
+   ========== */
+.main {
+	flex: 1;
+	flex-flow: column;
+	height: 100%;
+	padding: 5px;
+	overflow-x: auto;
+	overflow-y: scroll;
+}
+
+.main-content {
+	display: block;
+	margin-bottom: 1em;
+}
+
+.main-content > h1 {
+	padding: 10px;
+	background-color: #202020;
+	color: #fff;
+	font-size: 1.4em;
+	font-weight: bold;
+	text-align: center;
+}
+
+.main-content-body {
+	display: block;
+	max-width: 1200px;
+	margin: 10px auto;
+	padding: 0 1em;
+}
+
+.main-content-body h1 {
+	margin: 1em 0 .5em 0;
+}
+
+/* マイリスト */
+.mylist-wrap {
+	display: flex;
+	flex-wrap: wrap;
+}
+.mylist-item {
+	width: 25%;
+/*	width: 20%;*/
+	padding: .5em;
+	cursor: pointer;
+}
+@media screen and (max-width: 1200px) {
+	.mylist-item {
+		width: 25%;
+	}
+}
+@media screen and (max-width: 1000px) {
+	.mylist-item {
+		width: 33.32%;
+	}
+}
+@media screen and (max-width: 800px) {
+	.mylist-item {
+		width: 50%;
+	}
+}
+@media screen and (max-width: 640px) {
+	.mylist-item {
+		width: 100%;
+	}
+}
+.mylist-item:hover {
+	background-color: #eee;
+}
+.mylist-item .thumb {
+	position: relative;
+	width: 100%;
+	padding-top: 56.25%;
+	background-color: #202020;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+.mylist-item .thumb .time {
+	position: absolute;
+	display: inline-block;
+	bottom: 0;
+	right: 0;
+	padding: 2px 3px;
+	background-color: rgba(0, 0, 0, 0.8);
+	color: #fff;
+	font-size: 14px;
+}
+.mylist-item h1 {
+	margin: 2px 0 0 0;
+	font-size: 13.5px;
+	font-weight: bold;
+	line-height: 1.5;
+}
+
+/* マイリスト設定 */
+.edit-mylist-list {
+	max-width: 300px;
+	display: block;
+	margin-bottom: .5em;
+	list-style: none;
+}
+.edit-mylist-list li {
+	display: block;
+	margin: 2px 0;
+	list-style: none;
+}
+.edit-mylist-list li p {
+	position: relative;
+	padding: 10px 10px 10px 18px;
+	border-width: 1px;
+	border-style: solid;
+	font-size: .95em;
+}
+.edit-mylist-list li p .move {
+	position: absolute;
+	width: 6px;
+	height: 60%;
+	top: 20%;
+	left: 5px;
+	border-width: 0 1px;
+	border-style: solid;
+	cursor: move;
+}
+.edit-mylist-list li p:hover {
+/*	background-color: #eee;*/
+}
+.edit-mylist-list li p .i-x {
+/*	visibility: hidden;*/
+	position: absolute;
+	top: 50%;
+	right: 5px;
+	margin-top: -.5em;
+	cursor: pointer;
+}
+.edit-mylist-list li p:hover .i-x {
+/*	visibility: visible;*/
+}
+.edit-mylist-list li.sortable-placeholder {
+	height: 37px;
+	border-width: 1px;
+	border-style: dashed;
+	border-color: #555;
+}
+
+/* ==========
+	サイド
+   ========== */
+.side {
+	max-width: 350px;
+	min-width: 250px;
+	height: 100%;
+	padding: 5px;
+	background-color: #fff;
+	box-shadow: 2px 0 8px rgba(0, 0, 0, 0.4);
+	overflow-x: auto;
+	overflow-y: scroll;
+}
+
+.side-content {
+	display: block;
+	margin-bottom: 1em;
+}
+
+.side-content h1 {
+	margin-bottom: 5px;
+	padding: 4px 0;
+	border-width: 1px 0;
+	border-style: solid;
+	font-size: .95em;
+	font-weight: normal;
+	text-align: center;
+}
+
+.side-content-body {
+	margin-bottom: 8px;
+	padding: 4px;
+}
+
+/* メニュー */
+.button-list {
+	display: block;
+	list-style: none;
+}
+
+.button-list li {
+	display: block;
+	list-style: none;
+}
+
+.button-list li p {
+	display: block;
+	padding: 8px 5px;
+	background-color: #fff;
+	font-size: .95em;
+	cursor: pointer;
+}
+
+.button-list li p:hover {
+	background-color: #3f3f3f;
+	color: #fff;
+}
+.button-list li p.active {
+	background-color: #202020;
+	color: #fff;
+	cursor: default;
+}
+
+
+/* ==========
+	パーツ
+   ========== */
+/* ソースコード */
+.license-code {
+	margin-bottom: 2em;
+	padding: .5em;
+	background-color: #888;
+	color: #fff;
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+/* テキスト */
+.note {
+	margin: .5em 0;
+	font-size: .9em;
+	line-height: 1.5;
+}
+.notice-1 {
+	display: inline-block;
+	margin-bottom: .5em;
+	padding: .6em 1em;
+	border-width: 1px;
+	border-style: solid;
+	font-size: .95em;
+}
+.n-c-ok {
+	background-color: #7eea3b;
+	color: #fff;
+	border-color: #3eb429;
+}
+.n-c-error {
+	background-color: #ff4444;
+	color: #fff;
+	border-color: #dd2525;
+}
+/* 入力ボックス */
+.input-1 {
+	display: block;
+	width: 300px;
+	margin: .5em 0;
+	padding: .4em;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #555;
+	font-size: .9em;
+	outline: none;
+}
+.input-2 {
+	display: inline-block;
+	width: 150px;
+	margin-bottom: .5em;
+	padding: 2px .4em;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #555;
+	font-size: .9rem;
+	outline: none;
+}
+
+/* ボタン */
+.button-1 {
+	min-width: 100px;
+	display: inline-block;
+	padding: .6em 1em;
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 3px;
+	font-size: .95em;
+	text-align: center;
+	outline: none;
+	cursor: pointer;
+}
+.button-2 {
+	width: 50px;
+	height: 30px;
+	display: inline-block;
+	line-height: 30px;
+	text-align: center;
+}
+.b-c-normal {
+	background-color: #3f3f3f;
+	color: #fff;
+	border-color: #202020;
+}
+.b-c-normal:active {
+	box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.8);
+}
+.b-c-save {
+	background-color: #27bdd1;
+	color: #fff;
+	border-color: #008198;
+}
+.b-c-save:active {
+	box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.4);
+}
+/* アイコン */
+.icon {
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	color: #202020;
+}
+.i-x {
+	position: relative;
+}
+.i-x:before {
+	content: "×";
+}
+
+
+
+
+
+
