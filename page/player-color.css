@@ -1,0 +1,74 @@
+::selection {
+	color: #363233;
+	background-color: #d0d0d0;
+}
+::-webkit-scrollbar {
+    width: 9px;
+	height: 9px;
+}
+
+::-webkit-scrollbar-track {
+	background-color: #efe4e5;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #ef1a3b;
+/*	background-color: #ef1a3b;*/
+	border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background-color: #ff5a5a;
+}
+::-webkit-scrollbar-corner {
+	background-color: #ef1a3b;
+}
+body {
+	background-color: #fff;
+	color: #ef1a3b;
+}
+.main {
+	background-color: #fff;
+}
+.side {
+	background-color: #fff;
+}
+.side-top {
+	box-shadow: 1px 0 5px rgba(0,0,0,0.3);
+}
+.side-top button {
+	color: #ef1a3b;
+	font-weight: bold;
+}
+.side-top,
+.side-top button {
+	border-color: #ef1a3b;
+}
+.side-top button:hover {
+	background-color: #ef1a3b;
+	color: #fff;
+}
+
+.side-open-button:hover {
+	background-color: #ef1a3b;
+}
+.side-open-button:before {
+	border-color: transparent transparent transparent #ef1a3b;
+}
+.side-open-button:hover:before {
+	border-left-color: #fff;
+}
+.side-top .close span:before {
+	border-color: transparent #ef1a3b transparent transparent;
+}
+
+.playlist li {
+	border-color: #ef1a3b;
+}
+.playlist li p:hover {
+	background-color: #fff;
+	color: #ef536b;
+}
+.playlist li p.active {
+	background-color: #ef1a3b;
+	color: #fff;
+}
