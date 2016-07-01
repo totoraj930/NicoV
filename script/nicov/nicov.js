@@ -8,6 +8,7 @@ const storage = require("electron-json-storage");
 const NVPlaylist = require("./nv-playlist");
 const NicoAPI = require("../nico-api/nico-api");
 const NicoObject = require("../nico-api/nico-object");
+const app_package = require("../../package.json");
 
 var NicoV = {},
 	NVMain = {},
@@ -37,7 +38,7 @@ NVMain.createWindow = function () {
 		x: setting.x,
 		y: setting.y,
 		resizable: true,
-		title: "NicoV"
+		title: app_package.name+" v"+app_package.version
 	});
 	NVMain.window.setMenu(null);
 	if (setting.maximized) {
@@ -81,7 +82,7 @@ NVPlayer.createWindow = function () {
 		x: setting.x,
 		y: setting.y,
 		resizable: true,
-		title: "NicoV"
+		title: app_package.name
 	});
 	NVPlayer.window.setMenu(null);
 	if (setting.maximized) {
@@ -172,7 +173,9 @@ NicoV.generateSettingFromJson = function (data) {
 			height: 600,
 			x: 0,
 			y: 0,
-			maximized: false
+			maximized: false,
+			last_section: "setting-account",
+			last_mylist: "deflist"
 		},
 		player: {
 			width: 600,
@@ -199,7 +202,8 @@ NicoV.generateSettingFromJson = function (data) {
 	if (!main) main = setting.main;
 	if (!player) player = setting.player;
 	// main
-	["width", "height", "x", "y", "maximized"].forEach(
+	["width", "height", "x", "y", "maximized",
+		"last_section", "last_mylist"].forEach(
 		function (prop) {
 		main[prop] = main.hasOwnProperty(prop)?
 			main[prop] : setting.main[prop];
@@ -267,7 +271,7 @@ function updatePlayerTitle () {
 	var current = playlist.getCurrent(),
 		item = playlist.getPlaylist()[current],
 		webContents = NVPlayer.window.webContents;
-	NVPlayer.window.setTitle(item.title+" - NicoV");
+	NVPlayer.window.setTitle(item.title+" - "+app_package.name);
 	webContents.send("player-updateCurrent", current);
 }
 
@@ -295,6 +299,9 @@ function playCurrentVideo () {
 			if (error) throw error;
 		});
 		webContents.send("player-updateVideo", result);
+	}).catch(function (error) {
+		console.log(item);
+		console.log(error);
 	});
 }
 
@@ -318,6 +325,8 @@ app.on("window-all-closed", function () {
 ipcMain.on("main-loadedWindow", function (event) {
 	event.sender.send("main-updateMylistGroup", NicoV.setting.mylist_group);
 	event.sender.send("main-updateUserSession", NicoV.setting.user_session);
+	event.sender.send("main-showSection", NicoV.setting.main.last_section,
+		NicoV.setting.main.last_mylist);
 	NApi.loginTest().then(function () {
 		event.sender.send("main-login", true);
 	}).catch(function () {
@@ -345,6 +354,7 @@ ipcMain.on("main-saveMylistGroup", function (event, mylist_group) {
 
 // マイリスト表示リクエスト
 ipcMain.on("main-showMylist", function (event, id, reload) {
+	NicoV.setting.main.last_mylist = id;
 	if (!reload && NicoV.mylist_cache.hasOwnProperty(id)) {
 		event.sender.send("main-showMylist", NicoV.mylist_cache[id]);
 		return;
@@ -358,6 +368,31 @@ ipcMain.on("main-showMylist", function (event, id, reload) {
 		dummy_mylist.id = id;
 		event.sender.send("main-showMylist", dummy_mylist);
 	});
+});
+
+// sectionの切り替え通知
+ipcMain.on("main-sectionChange", function (event, section_id) {
+	NicoV.setting.main.last_section = section_id;
+});
+
+// 動画を再生
+ipcMain.on("main-playVideo", function (event, id) {
+	NApi.getVideoData(id).then(function (result) {
+		playlist.setPlaylist([result]);
+		playlist.playVideo(0);
+		if (NVPlayer.window) {
+			NVPlayer.window.show();
+			NVPlayer.window.webContents.send("player-updatePlaylist", playlist.getPlaylist());
+			updatePlayerTitle();
+			playCurrentVideo();
+		}
+		else {
+			NVPlayer.createWindow(NicoV.setting.player);
+		}
+	}).catch(function (error) {
+		event.sender.send("main-failedPlayVideo", error);
+	});
+
 });
 
 // マイリスト再生リクエスト
@@ -449,7 +484,7 @@ ipcMain.on("player-hideMenu", function (event) {
 });
 
 // メインウィンドウを表示
-ipcMain.on("player-showMainWindow", function (event) {
+ipcMain.on("player-showMainWindow", function (event, section_id) {
 	if (NVMain.window) {
 		NVMain.window.show();
 	}

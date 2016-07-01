@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 	<meta charset="UTF-8">
-	<title>NicoV</title>
+<!--	<title>NicoV</title>-->
 	<link rel="stylesheet" href="main.css">
 	<link rel="stylesheet" href="main-color.css">
 	<script src="./script/lib/jquery.min.js"></script>
@@ -37,6 +37,7 @@
 				<h1>その他</h1>
 				<div class="side-content-body">
 					<ul class="button-list">
+						<li><p data-link="show-and-play">指定して表示&amp;再生</p></li>
 						<li><p data-link="help">ヘルプ</p></li>
 						<li><p data-link="license">ライセンス</p></li>
 					</ul>
@@ -47,7 +48,7 @@
 
 		<div class="main">
 			<section class="main-content" data-section="home">
-				<h1>NicoV v0.0.1</h1>
+				<h1>NicoV</h1>
 				<div class="main-content-body">
 
 				</div>
@@ -82,11 +83,14 @@
 					</section>
 					<section>
 						<h1>マイリストを追加</h1>
-						<div>
-							<input type="text" placeholder="マイリストID" id="edit_mylist_group_id" class="input-2">
-							<input type="text" placeholder="表示名" id="edit_mylist_group_name" class="input-2">
-						</div>
-						<button id="edit_mylist_group_add" class="button-1 b-c-save">追加</button>
+
+						<form action="#">
+							<div>
+								<input type="text" placeholder="マイリストID or URL" id="edit_mylist_group_id" class="input-1">
+								<input type="text" placeholder="表示名" id="edit_mylist_group_name" class="input-1">
+							</div>
+							<button type="submit" id="edit_mylist_group_add" class="button-1 b-c-save">追加</button>
+						</form>
 						<p class="note">
 							とりあえずマイリストを追加するには、マイリストIDを「deflist」にしてください。
 						</p>
@@ -105,11 +109,34 @@
 					</section>
 					<section>
 						<h1>ユーザーセッション</h1>
-						<input type="password" placeholder="user_sessionを入力" class="input-1" id="user_session">
-						<button id="login" class="button-1 b-c-save">ログイン</button>
+						<form action="#">
+							<input type="password" placeholder="user_sessionを入力" class="input-1" id="user_session">
+							<button type="submit" id="login" class="button-1 b-c-save">ログイン</button>
+						</form>
 						<p class="note">
 							.nicovideo.jpのCookie「user_session」を使ってログインします
 						</p>
+					</section>
+				</div>
+			</section>
+
+
+			<section class="main-content" data-section="show-and-play">
+				<h1>指定して表示&amp;再生</h1>
+				<div class="main-content-body">
+					<section>
+						<h1>マイリストを表示</h1>
+						<form action="#">
+							<input type="text" placeholder="マイリストID or URL" id="show_mylist_group_id" class="input-1">
+							<button type="submit" id="show_mylist_group" class="button-1 b-c-save">表示</button>
+						</form>
+					</section>
+					<section>
+						<h1>動画を再生</h1>
+						<form action="#">
+							<input type="text" placeholder="動画ID or URL" id="play_video_id" class="input-1">
+							<button type="submit" id="play_video" class="button-1 b-c-save">再生</button>
+						</form>
 					</section>
 				</div>
 			</section>

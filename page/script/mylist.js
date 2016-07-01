@@ -16,6 +16,8 @@ function showMylist (id) {
 	$("#mylist").attr("data-id", id);
 	$("#mylist_title").text("読み込み中");
 	$("#mylist_items").html("");
+	$(".button-list").removeClass("active");
+	$(`.button-list p[data-list-id="${id}"]`).addClass("active");
 	ipc.send("main-showMylist", id);
 }
 
@@ -61,7 +63,6 @@ function updateMylistHtml (mylist) {
 	}
 	$("#mylist_title").text(mylist.title);
 	$("#mylist_items").html(items_html);
-	console.log("ok")
 	$("#mylist_items .mylist-item").on("click", function () {
 		var id = $("#mylist").attr("data-id"),
 			current = $(this).attr("data-num");

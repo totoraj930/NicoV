@@ -3,7 +3,7 @@ const electron = require("electron");
 const ipc = electron.ipcRenderer;
 
 $(function() {
-	showSection("home");
+	$(".main-content").hide();
 	setMenuButtonListener();
 	setButtonListener();
 	ipc.send("main-loadedWindow");
@@ -26,12 +26,25 @@ ipc.on("main-login", function (event, result) {
 	}
 });
 
+// sectionの表示
+ipc.on("main-showSection", function (event, section_id, mylist_id) {
+	showSection(section_id);
+	if (section_id == "mylist") {
+		showMylist(mylist_id);
+	}
+});
+
+// 動画再生失敗
+ipc.on("main-failedPlayVideo", function (event, error) {
+	alert(`動画再生に失敗しました\n${error}`);
+});
+
 // マイリストグループの更新
 ipc.on("main-updateMylistGroup", function (event, mylist_group) {
 	showMenuMylistGroup(mylist_group);
 });
 
-/*
+/**
  * メニューボタンのリスナ登録
  */
 function setMenuButtonListener () {
@@ -50,7 +63,7 @@ function setMenuButtonListener () {
 	});
 }
 
-/*
+/**
  * マイリスト設定のマイリスト一覧のリスナ登録
  */
 function setEditMylistGroupListener () {
@@ -65,28 +78,58 @@ function setEditMylistGroupListener () {
 	});
 }
 
-/*
+/**
  * 設定関連のボタンのリスナ登録
  */
 function setButtonListener () {
 	$("#edit_mylist_group_add").on("click", addMylistGroup);
 	$("#edit_mylist_group_save").on("click", saveEditMylistGroup);
+	$("#show_mylist_group").on("click", function () {
+		var id = $("#show_mylist_group_id").val();
+		id = id.split("/").slice(-1)[0].split("?")[0];
+		console.log(id);
+		if (!id || !id[1] || id[1].match(/[^A-Za-z0-9]+/)) {
+			alert("不正なIDです");
+			return;
+		}
+		showSection("mylist");
+		showMylist(id);
+		$("#show_mylist_group_id").val("");
+	});
+	$("#play_video").on("click", function () {
+		var id = $("#play_video_id").val();
+		id = id.split("/").slice(-1)[0].split("?")[0];
+		if (!id || id.match(/[^A-Za-z0-9]+/)) {
+			alert("不正なIDです");
+			return;
+		}
+		ipc.send("main-playVideo", id);
+		$("#play_video_id").val("");
+	});
 	$("#login").on("click", login);
+	$("form").on("submit", function () {
+		return false;
+	});
 }
 
-/*
+/**
  * 指定したsectionに切り替え
- * @param {String} section - 表示するsectionのdata-section
+ * @param {String} section_id - 表示するsectionのdata-section
  */
-function showSection (section) {
+function showSection (section_id) {
+	ipc.send("main-sectionChange", section_id);
 	$(".main-content").hide();
-	$(`.main-content[data-section="${section}"]`).show();
-	if (section == "setting-mylist") {
+	$(`.main-content[data-section="${section_id}"]`).show();
+	$(".button-list p").removeClass("active");
+	if (section_id != "mylist") {
+		$(`.button-list p[data-link="${section_id}"]`).addClass("active");
+	}
+	if (section_id == "setting-mylist") {
 		showEditMylistGroup();
 	}
 };
 
-/*
+/**
  * ログインリクエストをなげる
  */
 function login () {
@@ -98,7 +141,7 @@ function login () {
 	ipc.send("main-login", user_session);
 }
 
-/*
+/**
  * メニューのマイリスト一覧を表示する
  * @param {Array} mylist_group - [[id, name]...]
  */
@@ -117,7 +160,7 @@ function showMenuMylistGroup (mylist_group) {
 	setMenuButtonListener();
 }
 
-/*
+/**
  * マイリスト設定のマイリスト一覧を表示する
  */
 function showEditMylistGroup () {
@@ -135,7 +178,7 @@ function showEditMylistGroup () {
 	setEditMylistGroupListener();
 }
 
-/*
+/**
  * マイリスト設定のマイリスト一覧を保存&適用する
  */
 function saveEditMylistGroup () {
@@ -151,12 +194,13 @@ function saveEditMylistGroup () {
 	ipc.send("main-saveMylistGroup", mylist_group);
 }
 
-/*
+/**
  * テキストボックスの内容のマイリストを追加する
  */
 function addMylistGroup () {
 	var id = $("#edit_mylist_group_id").val(),
 		name = $("#edit_mylist_group_name").val();
+	id = id.split("/").slice(-1)[0].split("?")[0];
 	if (!id || !name || id.match(/[^A-Za-z0-9]+/)) {
 		alert("不正な追加です");
 		return;
@@ -173,7 +217,7 @@ function addMylistGroup () {
 	$("#edit_mylist_group_name").val("");
 }
 
-/*
+/**
  * 表示しているマイリスト一覧を返す
  * @return {Array}
  */
@@ -187,5 +231,6 @@ function getMylistGroup () {
 	});
 	return mylist_group;
 }
+
 
 

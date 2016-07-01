@@ -268,7 +268,7 @@ NicoAPI.prototype.getVideoData =
 				reject(new Error("getVideoData() - Status error"));
 			}
 			var video = new NicoVideo();
-			video.video_id = $("video_id").text();
+			video.video_id = id;
 			video.title = $("title").text();
 			video.length_seconds =
 				$("length").text();
@@ -302,7 +302,7 @@ NicoAPI.prototype.getVideo =
 		var video;
 		that.getVideoData(id).then(function (result) {
 			video = result;
-			if (result.movide_type == "mp4") {
+			if (result.movie_type == "mp4") {
 				// mp4ならPC用
 				return that.getNormalVideo(id);
 			}
