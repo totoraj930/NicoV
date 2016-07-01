@@ -33,17 +33,24 @@ body {
 	background-color: #fff;
 }
 .side-top {
-	box-shadow: 1px 0 5px rgba(0,0,0,0.3);
+	box-shadow: 1px 0 5px rgba(0,0,0,0.5);
 }
-.side-top button {
+.side-bottom {
+	box-shadow: -1px 0 5px rgba(0,0,0,0.5);
+}
+.side-top button,
+.side-bottom button, {
 	color: #ef1a3b;
 	font-weight: bold;
 }
 .side-top,
-.side-top button {
+.side-bottom,
+.side-top button,
+.side-bottom button {
 	border-color: #ef1a3b;
 }
-.side-top button:hover {
+.side-top button:hover,
+.side-bottom button:hover {
 	background-color: #ef1a3b;
 	color: #fff;
 }

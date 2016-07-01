@@ -37,6 +37,10 @@ ipc.on("player-updateCurrent", function (event, current) {
 			$(this).addClass("active");
 		}
 	});
+	var top = $("#playlist li p.active").parent().position().top;
+	$(".side-main").animate({
+		scrollTop: $(".side-main").scrollTop() + top - 60
+	}, 150);
 });
 
 /*+
@@ -77,6 +81,9 @@ function setPlaylistListener () {
 function setButtonListener () {
 	$("#mode").on("click", toggleMode);
 	$("#shuffle").on("click", shufflePlaylist);
+	$("#show_main").on("click", function () {
+		ipc.send("player-showMainWindow");
+	});
 	$("#close_side").on("click", function () {
 		$(".side").addClass("closed");
 		ipc.send("player-hideMenu");
