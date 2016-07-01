@@ -300,7 +300,8 @@ function playCurrentVideo () {
 		});
 		webContents.send("player-updateVideo", result);
 	}).catch(function (error) {
-		console.log(item);
+		var webContents = NVPlayer.window.webContents;
+		webContents.send("player-failedPlayVideo", error);
 		console.log(error);
 	});
 }
@@ -344,6 +345,9 @@ ipcMain.on("main-login", function (event, user_session) {
 	}).catch(function () {
 		event.sender.send("main-login", false);
 	});
+	if (NVPlayer.window) {
+		NVPlayer.window.close();
+	}
 });
 
 // マイリスト一覧保存リクエスト
@@ -390,7 +394,8 @@ ipcMain.on("main-playVideo", function (event, id) {
 			NVPlayer.createWindow(NicoV.setting.player);
 		}
 	}).catch(function (error) {
-		event.sender.send("main-failedPlayVideo", error);
+		event.sender.send("main-failedPlayVideo", error.message);
+		console.log(error);
 	});
 
 });

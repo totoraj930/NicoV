@@ -43,6 +43,10 @@ ipc.on("player-updateCurrent", function (event, current) {
 	}, 150);
 });
 
+// 動画再生失敗
+ipc.on("player-failedPlayVideo", function (event, error) {
+	alert(`動画再生に失敗しました\n${error}`);
+});
 /*+
  * プレイリストを更新
  */
