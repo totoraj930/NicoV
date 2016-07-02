@@ -40,7 +40,7 @@ NVMain.createWindow = function () {
 		resizable: true,
 		title: app_package.name+" v"+app_package.version
 	});
-	NVMain.window.setMenu(null);
+//	NVMain.window.setMenu(null);
 	if (setting.maximized) {
 		NVMain.window.maximize();
 	}
@@ -403,6 +403,22 @@ ipcMain.on("main-playVideo", function (event, id) {
 // マイリスト再生リクエスト
 ipcMain.on("main-playMylist", function (event, id, current) {
 	if (!NicoV.mylist_cache.hasOwnProperty(id)) {
+		NApi.getMylist(id).then(function (result) {
+			playlist.setPlaylist(result.item);
+			playlist.playVideo(current);
+			playlist.playVideo(current);
+			if (NVPlayer.window) {
+				NVPlayer.window.show();
+				NVPlayer.window.webContents.send("player-updatePlaylist", playlist.getPlaylist());
+				updatePlayerTitle();
+				playCurrentVideo();
+			}
+			else {
+				NVPlayer.createWindow(NicoV.setting.player);
+			}
+		}).catch(function (error) {
+			console.log(error);
+		});
 		return;
 	}
 	playlist.setPlaylist(NicoV.mylist_cache[id].item);

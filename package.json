@@ -1,7 +1,7 @@
 {
   "name": "NicoV",
   "description": "簡易ニコ動プレイヤー",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "main": "start.js",
   "author": "Reona Oshima (totoraj)",
   "license": "MIT",

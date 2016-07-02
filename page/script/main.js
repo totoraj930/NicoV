@@ -6,6 +6,7 @@ $(function() {
 	$(".main-content").hide();
 	setMenuButtonListener();
 	setButtonListener();
+	setDropListener();
 	ipc.send("main-loadedWindow");
 });
 
@@ -110,6 +111,58 @@ function setButtonListener () {
 	$("form").on("submit", function () {
 		return false;
 	});
+}
+
+/**
+ * ドラッグ&ドロップのリスナ登録
+ */
+function setDropListener () {
+	$(document).on({
+		"dragover": function (event) {
+			event.preventDefault();
+		},
+		"drop": dropText
+	});
+}
+
+/**
+ * 文字列がドロップされたときのしょり
+ * @param {Event} event - dropイベント
+ */
+function dropText (event) {
+	event.preventDefault();
+	var data_transfer = event.originalEvent.dataTransfer;
+	var types = data_transfer.types;
+	if (!types) return;
+	var data;
+	for (let i=0; i < types.length; i++) {
+		if (types[i] == "text/plain") {
+			try {
+				data = data_transfer.getData(types[i]);
+			}
+			catch (error) {
+				console.log(error);
+			}
+			break;
+		}
+	}
+
+	var target = $(".main-content:visible");
+	if (target.length < 0
+		|| target.attr("data-section") != "setting-mylist") {
+		showSection("show-and-play");
+		if (data.match(/mylist\//)) {
+			$("#show_mylist_group_id").val(data);
+			$("#show_mylist_group_id")[0].focus();
+		}
+		else {
+			$("#play_video_id").val(data);
+			$("#play_video_id")[0].focus();
+		}
+	}
+	else {
+		$("#edit_mylist_group_id").val(data);
+	}
 }
 
 /**

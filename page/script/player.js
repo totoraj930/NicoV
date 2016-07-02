@@ -6,6 +6,7 @@ const ipc = electron.ipcRenderer;
 var allows_request = true;
 $(function() {
 	setButtonListener();
+	setDropListener();
 	ipc.send("player-loadedWindow");
 });
 
@@ -121,6 +122,58 @@ function setVideoListener () {
 		}
 	});
 }
+
+/**
+ * ドラッグ&ドロップのリスナ登録
+ */
+function setDropListener () {
+	$(document).on({
+		"dragover": function (event) {
+			event.preventDefault();
+		},
+		"drop": dropText
+	});
+}
+
+/**
+ * 文字列がドロップされたときのしょり
+ * @param {Event} event - dropイベント
+ */
+function dropText (event) {
+	event.preventDefault();
+	var data_transfer = event.originalEvent.dataTransfer;
+	var types = data_transfer.types;
+	if (!types) return;
+	var data;
+	for (let i=0; i < types.length; i++) {
+		if (types[i] == "text/plain") {
+			try {
+				data = data_transfer.getData(types[i]);
+			}
+			catch (error) {
+				console.log(error);
+			}
+			break;
+		}
+	}
+	if (data.match(/mylist\//)) {
+		var id = data.split("/").slice(-1)[0].split("?")[0];
+		if (!id || id.match(/[^A-Za-z0-9]+/)) {
+			alert("不正なIDです");
+			return;
+		}
+		ipc.send("main-playMylist", id, 0);
+	}
+	else {
+		var id = data.split("/").slice(-1)[0].split("?")[0];
+		if (!id || id.match(/[^A-Za-z0-9]+/)) {
+			alert("不正なIDです");
+			return;
+		}
+		ipc.send("main-playVideo", id);
+	}
+}
+
 
 /**
  * プレイリストのシャッフルリクエスト
