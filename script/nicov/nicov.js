@@ -40,7 +40,7 @@ NVMain.createWindow = function () {
 		resizable: true,
 		title: app_package.name+" v"+app_package.version
 	});
-//	NVMain.window.setMenu(null);
+	NVMain.window.setMenu(null);
 	if (setting.maximized) {
 		NVMain.window.maximize();
 	}

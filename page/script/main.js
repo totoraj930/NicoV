@@ -162,6 +162,7 @@ function dropText (event) {
 	}
 	else {
 		$("#edit_mylist_group_id").val(data);
+		$("#edit_mylist_group_id")[0].focus();
 	}
 }
 
