@@ -329,6 +329,7 @@ NicoAPI.prototype.getVideo =
 NicoAPI.prototype.getNormalVideo =
 	function (id) {
 	var that = this,
+		id = id,
 		cookie,
 		options = {
 			port: 80,
@@ -341,8 +342,16 @@ NicoAPI.prototype.getNormalVideo =
 	return new Promise(function (resolve, reject) {
 		options.hostname = URLS.video_page.hostname;
 		options.path = URLS.video_page.path+id+"?watch_harmful=1";
-
+		var redirect = false;
 		that.getByHttp(options).then(function (result) {
+			// チャンネル動画だと301が帰ってくるのでそっちの方を取得
+			if (result.headers.hasOwnProperty("location")) {
+				var location = result.headers["location"];
+				id = location.split("/").slice(-1)[0].split("?")[0];
+				options.path = URLS.video_page.path+id+"?watch_harmful=1";
+				redirect = true;
+				return that.getByHttp(options);
+			}
 			// 動画ページからnicohistoryを取得
 			cookie = result.headers["set-cookie"]+"";
 			cookie = cookie.match(/nicohistory=(.+?);/);
@@ -350,6 +359,14 @@ NicoAPI.prototype.getNormalVideo =
 				return Promise.reject(new Error("`nicohistory` does not exist."));
 			cookie = cookie[1];
 
+		}).then(function (result) {
+			if (!redirect) return;
+			// 動画ページからnicohistoryを取得
+			cookie = result.headers["set-cookie"]+"";
+			cookie = cookie.match(/nicohistory=(.+?);/);
+			if (!cookie || !cookie[1])
+				return Promise.reject(new Error("`nicohistory` does not exist."));
+			cookie = cookie[1];
 		}).then(function () {
 			// getflv
 			options.hostname = URLS.getflv.hostname;
@@ -381,6 +398,7 @@ NicoAPI.prototype.getNormalVideo =
 NicoAPI.prototype.getSmartVideo =
 	function (id) {
 	var that = this,
+		id = id,
 		options = {
 			port: 80,
 			method: "GET",
@@ -405,6 +423,8 @@ NicoAPI.prototype.getSmartVideo =
 			options.hostname = watch_api_url[0];
 			watch_api_url.shift();
 			options.path = "/"+watch_api_url.join("/");
+			// idを一応watch_api_urlに合わせる
+			id = watch_api_url.slice(-1)[0].split("?")[0];
 
 			return that.getByHttp(options);
 
@@ -460,7 +480,7 @@ NicoAPI.prototype.getByHttp =
 		var req = http.request(options, function (res) {
 			res.setEncoding("utf8");
 			var body = "";
-			if (res.statusCode < 200 || res.statusCode > 299) {
+			if (res.statusCode < 200 || res.statusCode > 301) {
 				reject(new Error(res.statusCode));
 			}
 
