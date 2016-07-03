@@ -223,6 +223,10 @@ NicoAPI.prototype.generateNicoMylistFromNormal =
 		var video = new NicoVideo();
 		video.title = item.children("title").text();
 		video.video_id = item.children("link").text().split("/")[4];
+		// ニコニコムービーメーカーの動画を除外
+		if (video.video_id.match(/^nm/)) {
+			return;
+		}
 		video.length_seconds = 0;
 		var length_second =
 			description.match(
@@ -306,6 +310,10 @@ NicoAPI.prototype.getVideo =
 				// mp4ならPC用
 				return that.getNormalVideo(id);
 			}
+			else if (result.movie_type == "swf") {
+				// swfだったら終了
+				reject(new Error("swf形式の動画はサポートされていません"));
+			}
 			else {
 				// それ以外ならスマホ用
 				return that.getSmartVideo(id);
@@ -384,7 +392,7 @@ NicoAPI.prototype.getNormalVideo =
 			ret.url = decodeURIComponent(ret.url[1]);
 			resolve(ret);
 		}).catch(function (error) {
-			reject(new Error("getNromalVideo() - ")+error);
+			reject(new Error("getNromalVideo() - "+error));
 		});
 	});
 }
@@ -418,14 +426,13 @@ NicoAPI.prototype.getSmartVideo =
 			if (!watch_api_url || !watch_api_url[1]) {
 				return Promise.reject(new Error("`watch_api_url` does not exist."));
 			}
-			watch_api_url = watch_api_url[1].replace("&amp;", "&")
+			watch_api_url = watch_api_url[1].replace(/&amp;/g, "&")
 				.replace("http://", "").split("/");
 			options.hostname = watch_api_url[0];
 			watch_api_url.shift();
 			options.path = "/"+watch_api_url.join("/");
 			// idを一応watch_api_urlに合わせる
 			id = watch_api_url.slice(-1)[0].split("?")[0];
-
 			return that.getByHttp(options);
 
 		}).then(function (result) {
@@ -435,7 +442,6 @@ NicoAPI.prototype.getSmartVideo =
 			if (!watch_auth_key) {
 				return Promise.reject(new Error("`watch_auth_key` does not exist."));
 			}
-
 			return watch_auth_key;
 
 		}).then(function (watch_auth_key) {
@@ -443,6 +449,7 @@ NicoAPI.prototype.getSmartVideo =
 			options.hostname = URLS.getflv.hostname;
 			options.path = URLS.getflv.path+id
 				+"&device=iphone3&watch_auth_key="+watch_auth_key;
+			console.log(options.hostname+options.path);
 			return that.getByHttp(options);
 
 		}).then(function (result) {
@@ -464,7 +471,7 @@ NicoAPI.prototype.getSmartVideo =
 
 			resolve(ret);
 		}).catch(function (error) {
-			reject(new Error("getSmartVideo() - ")+error);
+			reject(new Error("getSmartVideo() - "+error));
 		});
 	});
 }

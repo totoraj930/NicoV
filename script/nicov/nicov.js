@@ -301,7 +301,7 @@ function playCurrentVideo () {
 		webContents.send("player-updateVideo", result);
 	}).catch(function (error) {
 		var webContents = NVPlayer.window.webContents;
-		webContents.send("player-failedPlayVideo", error);
+		webContents.send("player-failedPlayVideo", error.message);
 		console.log(error);
 	});
 }
