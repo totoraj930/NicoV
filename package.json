@@ -1,13 +1,10 @@
 {
   "name": "NicoV",
   "description": "簡易ニコ動プレイヤー",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "main": "start.js",
   "author": "Reona Oshima (totoraj)",
   "license": "MIT",
-  "devDependencies": {
-    "electron-prebuilt": "^1.2.5"
-  },
   "dependencies": {
     "electron-json-storage": "^2.0.0",
     "cheerio": "^0.20.0"

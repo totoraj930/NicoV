@@ -61,6 +61,7 @@ document.getElementsByTagName("body")[0].innerHTML = document.cookie.match(/user
 * [electron-json-storage](https://github.com/jviotti/electron-json-storage/)
 * [cheerio](https://github.com/cheeriojs/cheerio/)
 * [jQuery](http://jquery.com/)
+* [HTML5 Sortable](http://farhadi.ir/projects/html5sortable/)
 
 
 ## 著者(Author)
